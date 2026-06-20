@@ -1,0 +1,20 @@
+{
+  "name": "tugas-sesi-7",
+  "version": "1.0.0",
+  "description": "tugas 7 API automation",
+  "type": "module",
+  "scripts": {
+    "test": "mocha tests --recursive --timeout 5000 --reporter spec",
+    "test:html": "mocha tests --recursive --timeout 5000 --reporter mocha-simple-html-reporter --reporter-options output=report.html",
+    "test:json": "mocha tests --recursive --timeout 5000 --reporter json > test-results.json"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "mocha": "^10.7.3",
+    "mocha-simple-html-reporter": "^2.0.0"
+  }
+}
