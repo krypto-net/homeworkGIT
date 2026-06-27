@@ -426,10 +426,12 @@ body {
                     <li class="passes">passes: <em>2</em></li>
                     <li class="pending">pending: <em>0</em></li>
                     <li class="failures">failures: <em>0</em></li>
-                    <li class="duration">duration: <em>7.3s</em></li>
+                    <li class="duration">duration: <em>2.5s</em></li>
                 </ul>
             </div>
-            <ul id="report"><li class="suite"><h1>SauceDemo Automation Test</h1><ul><li class="test pass slow"><h2>Login standard_user<span class="duration">245ms</span></h2><pre><code>async function () {
+            <ul id="report"><li class="suite"><h1>SauceDemo Automation Test</h1><ul><li class="test pass slow"><h2>Login standard_user<span class="duration">1184ms</span></h2><pre><code>async function () {
+        let driver = await new Builder().forBrowser(&#x27;chrome&#x27;).build();
+        await driver.get(&#x27;https://www.saucedemo.com&#x27;);
         let inputUsername = await driver.findElement(By.css(&#x27;[data-test=&#x22;username&#x22;]&#x27;));
         let inputPassword = await driver.findElement(By.xpath(&#x27;//*[@data-test=&#x22;password&#x22;]&#x27;));
         let buttonLogin   = await driver.findElement(By.id(&#x27;login-button&#x27;));
@@ -440,7 +442,20 @@ body {
         assert.strictEqual(currentUrl, &#x27;https://www.saucedemo.com/inventory.html&#x27;);
         let inventoryList = await driver.findElement(By.css(&#x27;.inventory_list&#x27;));
         assert.strictEqual(await inventoryList.isDisplayed(), true);
-    }</code></pre></li><li class="test pass slow"><h2>Urut produk A-Z<span class="duration">120ms</span></h2><pre><code>async function () {
+        await driver.quit();
+    }</code></pre></li><li class="test pass slow"><h2>Urut produk A-Z<span class="duration">1322ms</span></h2><pre><code>async function () {
+        let driver = await new Builder().forBrowser(&#x27;chrome&#x27;).build();
+        await driver.get(&#x27;https://www.saucedemo.com&#x27;);
+        let inputUsername = await driver.findElement(By.css(&#x27;[data-test=&#x22;username&#x22;]&#x27;));
+        let inputPassword = await driver.findElement(By.xpath(&#x27;//*[@data-test=&#x22;password&#x22;]&#x27;));
+        let buttonLogin   = await driver.findElement(By.id(&#x27;login-button&#x27;));
+        await inputUsername.sendKeys(&#x27;standard_user&#x27;);
+        await inputPassword.sendKeys(&#x27;secret_sauce&#x27;);
+        await buttonLogin.click();
+        await driver.wait(
+            until.elementLocated(By.css(&#x27;.inventory_list&#x27;)),
+            10000
+        );
         let sortDropdown = await driver.findElement(
             By.css(&#x27;[data-test=&#x22;product-sort-container&#x22;]&#x27;)
         );
@@ -452,6 +467,7 @@ body {
         assert.strictEqual(productName, &#x27;Sauce Labs Backpack&#x27;);
         let activeFilter = await driver.findElement(By.css(&#x27;.product_sort_container&#x27;));
         assert.strictEqual(await activeFilter.isDisplayed(), true);
+        await driver.quit();
     }</code></pre></li></ul></li></ul>
         </div>
         <script>

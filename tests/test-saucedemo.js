@@ -2,17 +2,10 @@ const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
 
 describe('SauceDemo Automation Test', function () {
-    let driver;
-    before(async function () {
-        driver = await new Builder().forBrowser('chrome').build();
-        await driver.get('https://www.saucedemo.com');
-    });
-
-    after(async function () {
-        await driver.quit();
-    });
 
     it('Login standard_user', async function () {
+        let driver = await new Builder().forBrowser('chrome').build();
+        await driver.get('https://www.saucedemo.com');
 
         let inputUsername = await driver.findElement(By.css('[data-test="username"]'));
         let inputPassword = await driver.findElement(By.xpath('//*[@data-test="password"]'));
@@ -27,9 +20,26 @@ describe('SauceDemo Automation Test', function () {
 
         let inventoryList = await driver.findElement(By.css('.inventory_list'));
         assert.strictEqual(await inventoryList.isDisplayed(), true);
+
+        await driver.quit();
     });
 
     it('Urut produk A-Z', async function () {
+        let driver = await new Builder().forBrowser('chrome').build();
+        await driver.get('https://www.saucedemo.com');
+
+        let inputUsername = await driver.findElement(By.css('[data-test="username"]'));
+        let inputPassword = await driver.findElement(By.xpath('//*[@data-test="password"]'));
+        let buttonLogin   = await driver.findElement(By.id('login-button'));
+
+        await inputUsername.sendKeys('standard_user');
+        await inputPassword.sendKeys('secret_sauce');
+        await buttonLogin.click();
+
+        await driver.wait(
+            until.elementLocated(By.css('.inventory_list')),
+            10000
+        );
 
         let sortDropdown = await driver.findElement(
             By.css('[data-test="product-sort-container"]')
@@ -45,5 +55,7 @@ describe('SauceDemo Automation Test', function () {
 
         let activeFilter = await driver.findElement(By.css('.product_sort_container'));
         assert.strictEqual(await activeFilter.isDisplayed(), true);
+
+        await driver.quit();
     });
 });
